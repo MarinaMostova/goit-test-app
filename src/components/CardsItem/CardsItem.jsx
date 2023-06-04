@@ -1,50 +1,49 @@
-import { useEffect, useState } from "react";
-import { updateFollowersCount } from "../../services/users-api.js";
-import { ToastContainer, toast } from "react-toastify";
+import { useEffect, useState } from 'react';
+import { updateFollowersCount } from '../../services/users-api.js';
+import { ToastContainer, toast } from 'react-toastify';
 
-import "react-toastify/dist/ReactToastify.css";
-import PropTypes from "prop-types";
-import css from "./CardsItem.module.css";
-import img from "../../images/picture.png";
-import logo from "../../images/logo.png";
+import 'react-toastify/dist/ReactToastify.css';
+import PropTypes from 'prop-types';
+import css from './CardsItem.module.css';
+import img from '../../images/picture.png';
+import logo from '../../images/logo.png';
 
 const CardsItem = ({ card }) => {
   const { id, user, tweets, followers, avatar } = card;
   const [isFollowing, setIsFollowing] = useState(
-    localStorage.getItem(`following_${id}`) === "true"
+    localStorage.getItem(`following_${id}`) === 'true'
   );
   const [followerCount, setFollowerCount] = useState(followers);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    const updateFollowers = async () => {
+      setIsLoading(true);
+      try {
+        await updateFollowersCount(id, followerCount);
+      } catch (error) {
+        setError(error);
+        toast(`Error!Something went wrong...`);
+      } finally {
+        setIsLoading(false);
+      }
+    };
     updateFollowers(id, followerCount);
-  }, [followerCount]);
-
-  const updateFollowers = async () => {
-    setIsLoading(true);
-    try {
-      await updateFollowersCount(id, followerCount);
-    } catch (error) {
-      setError(error);
-      toast(`Error!Something went wrong...`);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  }, [followerCount, id]);
 
   const handleCardClick = () => {
     if (isFollowing) {
-      setFollowerCount((prevCount) => prevCount - 1);
+      setFollowerCount(prevCount => prevCount - 1);
       setIsFollowing(false);
       toast(`You no longer follow ${user}!`);
       localStorage.removeItem(`following_${id}`);
     } else {
-      setFollowerCount((prevCount) => prevCount + 1);
+      setFollowerCount(prevCount => prevCount + 1);
       toast(`Wow! Now you're following ${user}!`);
 
       setIsFollowing(true);
-      localStorage.setItem(`following_${id}`, "true");
+      localStorage.setItem(`following_${id}`, 'true');
     }
   };
 
@@ -67,7 +66,7 @@ const CardsItem = ({ card }) => {
           </div>
           <p className={css.text}>{tweets} tweets</p>
           <p className={css.text__folowers}>
-            {followerCount.toLocaleString("en")} Followers
+            {followerCount.toLocaleString('en')} Followers
           </p>
           <button
             type="button"
@@ -78,8 +77,8 @@ const CardsItem = ({ card }) => {
             }
             onClick={handleCardClick}
           >
-            {isFollowing ? "Following" : "Follow"}
-            {isLoading && "..."}
+            {isFollowing ? 'Following' : 'Follow'}
+            {isLoading && '...'}
           </button>
         </li>
       )}
