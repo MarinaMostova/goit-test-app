@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
-import css from "./Home.module.css";
-import img from "../../images/picture.png";
+import { Link } from 'react-router-dom';
+import css from './Home.module.css';
+import img from '../../images/picture.png';
 
 const Home = () => {
   return (
@@ -8,8 +8,8 @@ const Home = () => {
       <img src={img} alt="GoIt" className={css.img} />
       <div>
         <p className={css.text}>Welcome!</p>
-        <Link to={"/cards"} className={css.link}>
-          Cards
+        <Link to={'/tweets'} className={css.link}>
+          Tweets
         </Link>
       </div>
     </div>

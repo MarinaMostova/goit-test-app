@@ -1,7 +1,7 @@
-import { Suspense } from "react";
-import { Outlet, NavLink } from "react-router-dom";
-import css from "./SharedLayout.module.css";
-import Loader from "../Loader";
+import { Suspense } from 'react';
+import { Outlet, NavLink } from 'react-router-dom';
+import css from './SharedLayout.module.css';
+import Loader from '../Loader';
 
 const SharedLayout = () => {
   return (
@@ -20,9 +20,9 @@ const SharedLayout = () => {
             className={({ isActive }) => {
               return isActive ? css.active : css.link;
             }}
-            to="/cards"
+            to="/tweets"
           >
-            Cards
+            Tweets
           </NavLink>
         </nav>
       </header>
